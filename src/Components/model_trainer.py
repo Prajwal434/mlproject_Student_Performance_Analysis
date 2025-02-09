@@ -45,10 +45,10 @@ class ModelTrainer:
                 "Catboosting classifier" : CatBoostRegressor(verbose=0),
                 "adaboost classifier" : AdaBoostRegressor(), 
             }
-            model_report:dict=evaluate_models(X_train= x_train,Y_train=y_train,X_test=x_test,Y_test=y_test,Models=models)
+            model_report,best_models = evaluate_models(X_train= x_train,Y_train=y_train,X_test=x_test,Y_test=y_test,Models=models)
 
 
-            print("Model Report:", model_report)
+            print("\nModel Report:", model_report)
 
             if not model_report:
               raise CustomException("Model evaluation failed. No scores found.")
