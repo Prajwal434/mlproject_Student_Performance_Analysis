@@ -7,13 +7,17 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.Components.data_transformation import DataTransformation
+from src.Components.data_transformation import DataTransformationConfig
+print("DataTransformationConfig imported successfully")
+
 @dataclass
 class DataIngestionConfig:
     train_data_path: str=os.path.join('artifacts',"train.csv")
     test_data_path: str=os.path.join('artifacts',"test.csv")
     raw_data_path: str=os.path.join('artifacts',"data.csv")
 
-class Dataingestion:
+class DataIngestion:
     def __init__(self):
         self.ingestion_config=DataIngestionConfig()
 
@@ -39,12 +43,19 @@ class Dataingestion:
 
             return(
                 self.ingestion_config.train_data_path,
-                self.ingestion_config.test_data_path,
+                self.ingestion_config.test_data_path
                 
             )
         except Exception as e:
             raise CustomException(e,sys)
         
 if __name__=="__main__":
-  obj=Dataingestion()
-  obj.initiate_data_ingestion()
+  obj=DataIngestion()
+  train_data,test_data = obj.initiate_data_ingestion()
+
+  print("Calling Data Transformation...")
+  data_transformation = DataTransformation()
+  data_transformation.initiate_data_transformation(train_data,test_data)
+  print("Data Transformation completed")
+
+  print(f"Train Data Path: {train_data}, Test Data Path: {test_data}")
