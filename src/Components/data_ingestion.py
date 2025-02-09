@@ -9,6 +9,8 @@ from dataclasses import dataclass
 
 from src.Components.data_transformation import DataTransformation
 from src.Components.data_transformation import DataTransformationConfig
+from src.Components.model_trainer import ModelTrainerConfig
+from src.Components.model_trainer import ModelTrainer
 print("DataTransformationConfig imported successfully")
 
 @dataclass
@@ -55,7 +57,8 @@ if __name__=="__main__":
 
   print("Calling Data Transformation...")
   data_transformation = DataTransformation()
-  data_transformation.initiate_data_transformation(train_data,test_data)
+  train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)
   print("Data Transformation completed")
-
-  print(f"Train Data Path: {train_data}, Test Data Path: {test_data}")
+  ModelTrainer=ModelTrainer()
+  print(ModelTrainer.initiate_model_trainer(train_arr,test_arr))
+  
