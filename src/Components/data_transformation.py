@@ -43,8 +43,8 @@ class DataTransformation:
 
                    steps=[
                        ("imputer",SimpleImputer(strategy = "most_frequent")),
-                       ("one_hot_encoder",OneHotEncoder(sparse_output=False)),
-                       ("Scaler",StandardScaler())
+                       ("one_hot_encoder",OneHotEncoder(handle_unknown="ignore",sparse_output=False,max_categories=10)),
+                       ("Scaler",StandardScaler(with_mean=False))
                    ]
             
              )
@@ -93,6 +93,10 @@ class DataTransformation:
 
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
+
+            print("Transformed training shape:", input_feature_train_arr.shape)  # Debug
+            print("Transformed testing shape:", input_feature_test_arr.shape)  # Debug
+
 
             train_arr = np.c_[
                 input_feature_train_arr,np.array(target_feature_train_df)
